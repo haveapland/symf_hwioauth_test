@@ -1,0 +1,45 @@
+{% block body %}
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.3&appId=676441122460094";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+   function fb_login() 
+		{
+      FB.getLoginStatus(function(response)
+	 		{
+            if (response.status === 'connected') 
+				{
+                // connected
+             alert('Already connected, redirect to login page to create token.');
+                document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                } else
+				 {
+                    // not_authorized
+                    FB.login(function(response) 
+					{
+                        if (response.authResponse) 
+						{
+                            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                        } else {
+                            alert('Cancelled.');
+                        }
+                    }, {scope: 'user_friends'});
+                }
+            });
+        }
+
+</script>
+
+<h1 class="title">Hello!</h1>
+
+    Hello resource secured for <strong>facebook users</strong> only.</a>
+		<p>
+        <a href="#" onclick="fb_login();">Facebook Connect Button (Dialog)</a>
+		</p>
+{% endblock %}

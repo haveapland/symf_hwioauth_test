@@ -1,0 +1,58 @@
+<?php
+
+namespace Custom\FchatBundle\Entity;
+
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+    
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser as OAuthUser;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="Fchat_user")
+ * @ORM\Entity
+ * UniqueEntity("facebook_id")
+ */
+class User extends OAuthUser
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="facebook_id", type="integer")
+     */
+    private $facebookId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=80)
+     */
+    private $usernamename;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    public function __construct()
+    {   
+        parent::__construct;
+
+        $this->isActive = true;
+
+    }
+}

@@ -1,0 +1,39 @@
+# you can read more about security in the related section of the documentation
+# http://symfony.com/doc/current/book/security.html
+security:
+    providers:
+        hwi_oauth_provider:
+            id:  fchat_oauth.user.provider
+
+    firewalls:
+
+       
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        # secured area for facebook users
+        secured_area:
+            pattern: ^/secured/
+            oauth:
+                resource_owners:
+                    facebook:           /secured/login_facebook
+                check_path:        /secured/login
+                login_path:        /secured/login
+                failure_path:      /secured/login
+                use_forward:       false
+                oauth_user_provider:   
+                    service: fchat_oauth.user.provider
+            anonymous: ~
+        
+            logout:            
+                path: /secured/logout
+                target: /
+
+    # with these settings you can restrict or allow access for different parts
+    # of your application based on roles, ip, host or methods
+    # http://symfony.com/doc/current/cookbook/security/access_control.html
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/secured/say, roles: ROLE_OAUTH_USER }
+           

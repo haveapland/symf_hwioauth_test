@@ -1,0 +1,15 @@
+custom_fchat:
+    resource: "@CustomFchatBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+# app/config/routing.yml
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /secured/connect
+
+facebook_login:
+    pattern: /secured/login_facebook
+
+logout:
+    path:   /secured/logout
